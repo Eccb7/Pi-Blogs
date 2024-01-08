@@ -80,7 +80,7 @@ Clone this repository to your desired folder:
 ### Install
 
 ```sh
-  git clone https://github.com/Eccb7/Blog-app.git
+  git clone https://github.com/Eccb7/Pi-Blogs.git
 ```
 
 Install dependencies:
