@@ -4,7 +4,7 @@
 
 </div>
 
-> # Title
+# Pi Blogs App
 
 # 📗 Table of Contents
 
@@ -26,9 +26,10 @@
 - [❓ FAQ (OPTIONAL)](#faq)
 - [📝 License](#license)
 
-# 📖 Blog APP <a name="about-project"></a>
+# 📖 Pi Blogs App <a name="about-project"></a>
 
-**About**
+The Pi Blog App will be a classic example of a blog website. I will create a fully functional website that will show the list of posts and empower readers to interact with them by adding comments and liking posts.
+
 
 ## 🛠 Built With <a name="built-with"></a>
 
@@ -42,7 +43,18 @@
 
 ### Key Features <a name="key-features"></a>
 
-.....
+- Project 1: Creating a data model.
+- Project 2: Validations and Model specs.
+- Project 3: Processing data in models.
+- Project 4: Controllers.
+- Project 5: Controllers specs.
+- Project 6: Views.
+- Project 7: Forms.
+- Project 8: Integration specs for Views and fixing n+1 problems.
+- Project 9: Add Devise.
+- Project 10: Add authorization rules.
+- Project 11: Add API endpoints.
+Exercise: API documentation.
 
 <!-- GETTING STARTED -->
 
@@ -67,16 +79,30 @@ Clone this repository to your desired folder:
 
 ### Install
 
+```sh
+  git clone https://github.com/Eccb7/Blog-app.git
+```
+
+Install dependencies:
+
+```sh
+  bundle install
+  npm install
+```
+
 ### Usage
 
-- bin/rails server (to run web application)
+```sh
+  rails server
+```
 
 ### Run tests
 
-<!-- - Run the following script and style test:
+To run tests, run the following command:
 
-      - rspec spec ./name_of_file_spec.rb -->
-
+```sh
+  rspec
+```
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 👥 Author <a name="authors"></a>
@@ -90,6 +116,9 @@ Clone this repository to your desired folder:
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 🔭 Future Features <a name="future-features"></a>
+
+- Make it mobile responsive
+- Give it an admin panel.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
