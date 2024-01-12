@@ -16,8 +16,8 @@ RSpec.describe Comment, type: :model do
     user = User.create(name: 'Jane Doe', posts_counter: 1)
     post = user.posts.create(title: 'Increments Test', comments_counter: 0, likes_counter: 0)
 
-    expect {
+    expect do
       post.increment!(:comments_counter)
-    }.to change { post.comments_counter }.by(1)
+    end.to change { post.comments_counter }.by(1)
   end
 end

@@ -52,7 +52,7 @@ RSpec.describe Post, type: :model do
   describe '#increment_user_posts_counter' do
     it 'increments the author\'s posts_counter by 1' do
       author = User.create(name: 'Test Author', posts_counter: 2)
-      post = author.posts.create(title: 'Test Post', comments_counter: 1, likes_counter: 0)
+      author.posts.create(title: 'Test Post', comments_counter: 1, likes_counter: 0)
 
       # Reload the author instance to get the updated posts_counter value
       author.reload
