@@ -9,4 +9,13 @@ RSpec.describe Like, type: :model do
 
     expect(like).to be_valid
   end
+
+  it 'increments likes_counter when a like is added' do
+    user = User.create(name: 'John Doe', posts_counter: 1)
+    post = user.posts.create(title: 'Increments Test', comments_counter: 0, likes_counter: 0)
+
+    expect {
+      post.increment!(:likes_counter)
+    }.to change { post.likes_counter }.by(1)
+  end
 end

@@ -48,4 +48,17 @@ RSpec.describe Post, type: :model do
     post = user.posts.create(title: 'Yet Another Post', comments_counter: 0, likes_counter: 4)
     expect(post).to be_valid
   end
+
+  describe '#increment_user_posts_counter' do
+    it 'increments the author\'s posts_counter by 1' do
+      author = User.create(name: 'Test Author', posts_counter: 2)
+      post = author.posts.create(title: 'Test Post', comments_counter: 1, likes_counter: 0)
+
+      # Reload the author instance to get the updated posts_counter value
+      author.reload
+
+      # Expect the author's posts_counter to be incremented by 1
+      expect(author.posts_counter).to eq(3)
+    end
+  end
 end
