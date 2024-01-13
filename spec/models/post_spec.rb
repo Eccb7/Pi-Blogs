@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe Post, type: :model do
+  self.use_transactional_tests = true
+
   it 'is valid with valid attributes' do
     user = User.create(name: 'Solo Artist', posts_counter: 5)
     user.save
@@ -59,6 +61,23 @@ RSpec.describe Post, type: :model do
 
       # Expect the author's posts_counter to be incremented by 1
       expect(author.posts_counter).to eq(3)
+    end
+  end
+
+  describe '#recent_comments' do
+    before :all do
+      @author = User.create(name: 'John Doe', posts_counter: 1)
+      @post = Post.create(author: @author, title: 'Kathy', text: 'Text here....', comments_counter: 0, likes_counter: 0)
+
+      # Creating 8 comments associated with the post
+      8.times { |comment_i| Comment.create(user: @author, text: (comment_i + 1).to_s) }
+    end
+
+    it 'returns five most recent comments' do
+      expected_comments = @post.comments.order(created_at: :desc).limit(5)
+
+      # Ensure the method returns the five most recent comments
+      expect(@post.recent_comments).to eq(expected_comments)
     end
   end
 end
