@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Users', type: :request do
   describe 'GET /index' do
     it 'renders the index template' do
-      user = create(:user)
+      create(:user)
 
       get users_path
 

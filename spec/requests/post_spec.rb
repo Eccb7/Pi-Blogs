@@ -4,7 +4,7 @@ RSpec.describe 'Posts', type: :request do
   describe 'GET /index' do
     it 'renders the index template' do
       user = create(:user)
-      post = create(:post, author: user)
+      create(:post, author: user)
 
       get user_posts_path(user)
 
