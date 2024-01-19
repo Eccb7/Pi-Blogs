@@ -1,13 +1,31 @@
-<h1>
-  All posts
-</h1>
+<table class="table">
+  <tbody>
+    <tr>
+      <td>
+        <%= image_tag @user.photo, alt: 'User Photo', class: 'user-photo' %>
+      </td>
+      <td>
+        <h1><%= @user.name %></h1>
+        <p><strong>Number of posts:</strong> <%= @user.posts_counter %></p>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h1>All Posts</h1>
 
 <ul>
   <% if @posts.present? %>
-    <% @posts.each do |post| %>
+    <% @posts.each_with_index do |post, index| %>
       <li>
+        <strong><%= "Post #{index + 1}" %></strong>
         <%= link_to post.title, user_post_path(post.author, post) %>
+        <p>
+          Comments: <%= post.comments_counter %>,
+          Likes: <%= post.likes_counter %>
+        </p>
       </li>
+      
     <% end %>
   <% else %>
     <li>No posts found</li>
