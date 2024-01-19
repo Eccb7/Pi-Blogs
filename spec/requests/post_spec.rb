@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe 'Posts', type: :request do
   describe 'GET /index' do
     it 'renders the index template' do
-      user = create(:user)
+      user = create(:user, photo: 'https://example.com/sample_photo.jpg')
       create(:post, author: user)
 
       get user_posts_path(user)
@@ -13,7 +13,7 @@ RSpec.describe 'Posts', type: :request do
     end
 
     it 'assigns all posts to @posts' do
-      user = create(:user)
+      user = create(:user, photo: 'https://example.com/sample_photo.jpg')
       post = create(:post, author: user)
 
       get user_posts_path(user)
