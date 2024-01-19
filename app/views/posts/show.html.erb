@@ -1,7 +1,22 @@
-<h1>
-    <%= @post.title %>
-</h1>
+<h1><%= "Post #{params[:index].to_i + 1} by #{@post.author.name}" %></h1>
+
 
 <p>
-    <%= @post.text %>
+  Comments: <%= @post.comments_counter %>,
+  Likes: <%= @post.likes_counter %>
 </p>
+<p><%= @post.text %></p>
+
+<div>
+  <% if @post.comments.present? %>
+    <ul>
+      <% @post.comments.each do |comment| %>
+        <li>
+          <strong><%= comment.user.name %>:</strong> <%= comment.text %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p>No comments for this post</p>
+  <% end %>
+</div>
