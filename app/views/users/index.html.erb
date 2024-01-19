@@ -2,10 +2,22 @@
   All Users
 </h1>
 
-<ul>
-  <% @users.each do |user| %>
-    <li>
-      <%= link_to user.name, user_path(user) %>
-    </li>
-  <% end %>
-</ul>
+<table class="table table-hover">
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td>
+          <%= link_to(user_path(user)) do %>
+            <img src="user.photo" class="img-thumbnail">
+          <% end %>
+        </td>
+        <td>
+          <h1>
+            <%= link_to user.name, user_path(user) %>
+          </h1>
+          <p>Number of posts: <%= user.posts_counter %></p>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
