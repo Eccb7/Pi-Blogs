@@ -1,11 +1,15 @@
 <h1>
-    All posts
+  All posts
 </h1>
 
 <ul>
-  <% @post.each do |post| %>
-    <li>
-      <%= link_to post.title, post_path(post) %>
-    </li>
+  <% if @posts.present? %>
+    <% @posts.each do |post| %>
+      <li>
+        <%= link_to post.title, user_post_path(post.author, post) %>
+      </li>
+    <% end %>
+  <% else %>
+    <li>No posts found</li>
   <% end %>
 </ul>
