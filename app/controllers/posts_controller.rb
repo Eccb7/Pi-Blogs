@@ -7,6 +7,7 @@ class PostsController < ApplicationController
 
   def show
     @post = @user.posts.find(params[:id])
+    @comment = Comment.new # Add this line to initialize a new comment for the form
   end
 
   def new
@@ -19,17 +20,24 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to user_post_path(@user, @post), notice: 'Post created successfully.'
     else
-      render json: { success: false, errors: @post.errors.full_messages }
+      render :new
     end
   end
 
   def like
     @post = @user.posts.find(params[:id])
-    if @post.likes.where(user: current_user).exists?
-      redirect_to user_post_path(@user, @post), alert: 'You have already liked this post.'
+    like = @post.likes.new(user: current_user)
+
+    if like.save
+      respond_to do |format|
+        format.html { redirect_to user_post_path(@user, @post), notice: 'Liked successfully.' }
+        format.js { render :update_likes }
+      end
     else
-      @post.likes.create(user: current_user)
-      redirect_to user_post_path(@user, @post), notice: 'Liked successfully.'
+      respond_to do |format|
+        format.html { redirect_to user_post_path(@user, @post), alert: 'Unable to like the post.' }
+        format.js { render js: 'alert("Unable to like the post.");' }
+      end
     end
   end
 
