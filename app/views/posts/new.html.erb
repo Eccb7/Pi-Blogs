@@ -18,17 +18,18 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
-    const postForm = document.getElementById('new_post');
+  const postForm = document.getElementById('new_post');
 
-    if (postForm) {
-      postForm.addEventListener('ajax:success', function (event) {
-        const response = event.detail[0];
-        const postsCounter = document.getElementById('posts_counter');
+  if (postForm) {
+    postForm.addEventListener('ajax:success', function (event) {
+      console.log('Post Success:', event.detail[0]);
+      const response = event.detail[0];
+      const postsCounter = document.getElementById('posts_counter');
 
-        if (response.success) {
-          postsCounter.innerText = response.posts_counter;
-        }
-      });
-    }
-  });
+      if (response.success) {
+        postsCounter.innerText = response.posts_counter;
+      }
+    });
+  }
+});
 </script>

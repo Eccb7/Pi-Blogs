@@ -19,7 +19,7 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to user_post_path(@user, @post), notice: 'Post created successfully.'
     else
-      render :new
+      render json: { success: false, errors: @post.errors.full_messages }
     end
   end
 
