@@ -1,41 +1,39 @@
-<table class="table">
-  <tbody>
-    <tr>
-      <td>
-        <%= image_tag @user.photo, alt: 'User Photo', class: 'user-photo' %>
-      </td>
-      <td>
-        <h1><%= @user.name %></h1>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<table class="table">
-  <td>
-    <p><%= @user.bio %></p>
-  </td>
-</table>
-
-<table class="table">
-  <tbody>
-    <td>
-      <% if @posts.present? %>
-        <% @posts.each_with_index do |post, index| %>
-          <div class="post">
-            <%= link_to "Post ##{index + 1}: #{post.title}", user_post_path(post.author, post) %>
-            <h2></h2>
-            <p><%= truncate(post.text, length: 150) %></p>
-            <p>
-              Comments: <%= post.comments_counter %>,
-              Likes: <%= post.likes_counter %>
-            </p>
+<div class='container'>
+  <div class='row mb-2 m-0 pt-2'>
+    <div class='col-md-1'>
+      <%= image_tag @user.photo, class: 'img-thumbnail' %>
+    </div>
+    <div class='col-md-11 card pt-2'>
+      <div class='row justify-content-between'>
+        <h4 class='align-bottom'><%= @user.name %></h4>
+        <label class='align-bottom text-end'>Number of posts: <span><%= @user.posts_counter %></span></label>
+      </div>
+    </div>
+    <div class='col-md-12 card mt-2'>
+      <p><%= @user.bio %></p>
+    </div>
+    <ul class='table table-responsive table-hover p-0'>
+      <% @user.recent_posts.each do |post| %>
+        <li class='card mt-2 p-2'>
+          <h5 class='col-md-12'>
+            <%= link_to post.title, user_post_path(@user, post) %>
+          </h5>
+          <p class='col-md-12 pt-2'>
+            <%= post.text %>
+          </p>
+          <div class='col-md-12 pt-2 text-end'>
+            <label class='me-2'>
+              Comments: <span><%= post.comments_counter %></span>
+            </label>
+            <label>
+              Likes: <span><%= post.likes_counter %></span>
+            </label>
           </div>
-        <% end %>
-        <%= link_to "See All Posts", user_posts_path(@user), class: 'btn btn-primary' %>
-      <% else %>
-        <p>No posts found</p>
+        </li>
       <% end %>
-    </td>
-  </tbody>
-</table>
+    </ul>
+    <div class='col-md-12 mt-2 text-center'>
+      <a href=<%= user_posts_path(@user) %> class='btn btn-primary col-md-3'>See all Posts</a>
+    </div>
+  </div>
+</div>

@@ -1,22 +1,25 @@
-<h1><%= "Post #{params[:index].to_i + 1} by #{@post.author.name}" %></h1>
-
-
-<p>
-  Comments: <%= @post.comments_counter %>,
-  Likes: <%= @post.likes_counter %>
-</p>
-<p><%= @post.text %></p>
-
-<div>
-  <% if @post.comments.present? %>
-    <ul>
-      <% @post.comments.each do |comment| %>
-        <li>
-          <strong><%= comment.user.name %>:</strong> <%= comment.text %>
-        </li>
-      <% end %>
-    </ul>
-  <% else %>
-    <p>No comments for this post</p>
-  <% end %>
+<div class='container'>
+  <div class='row card mt-2 mb-2 m-0 pt-2'>
+    <h5 class='col-md-12'>
+      <%= link_to "#{@post.title} by #{@post.author.name}", user_post_path(@user, @post) %>
+    </h5>
+    <div class='col-md-12 pt-2 text-end'>
+      <label class='me-2'>
+        Comments: <span><%= @post.comments_counter %></span>
+      </label>
+      <label>
+        Likes: <span><%= @post.likes_counter %></span>
+      </label>
+    </div>
+    <p class='col-md-12 pt-2'>
+      <%= @post.text %>
+    </p>
+  </div>
+  <div class='col-md-12 card mt-2 p-2'>
+    <% @post.comments.each do |comment| %>
+      <div>
+        <%= comment.user.name %>:</span> <span><%= comment.text %></span>
+      </div>
+    <% end %>
+  </div>
 </div>

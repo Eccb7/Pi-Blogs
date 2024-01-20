@@ -1,23 +1,17 @@
-<h1>
-  All Users
-</h1>
-
-<table class="table table-hover">
-  <tbody>
+<div class='container'>
+  <ul class='table table-responsive table-hover p-0'>
     <% @users.each do |user| %>
-      <tr>
-        <td>
-          <%= link_to(user_path(user)) do %>
-            <img src="user.photo" class="img-thumbnail">
-          <% end %>
-        </td>
-        <td>
-          <h1>
-            <%= link_to user.name, user_path(user) %>
-          </h1>
-          <p>Number of posts: <%= user.posts_counter %></p>
-        </td>
-      </tr>
+      <li class='row mb-2 m-0'>
+        <div class='col-md-1'>
+          <img src=" <%= user.photo %>" class="img-thumbnail">
+        </div>
+        <div class='col-md-10 card'>
+          <div class='row justify-content-between'>
+            <h4 class='align-bottom'><%= link_to user.name, user_path(user) %></h4>
+            <label class='align-bottom text-end'>Number of posts: <span><%= user.posts_counter %></span></label>
+          </div>
+        </div>
+      </li>
     <% end %>
-  </tbody>
-</table>
+  </ul>
+</div>
