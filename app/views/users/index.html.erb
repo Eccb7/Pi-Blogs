@@ -1,11 +1,17 @@
-<h1>
-  All Users
-</h1>
-
-<ul>
-  <% @users.each do |user| %>
-    <li>
-      <%= link_to user.name, user_path(user) %>
-    </li>
-  <% end %>
-</ul>
+<div class='container'>
+  <ul class='table table-responsive table-hover p-0'>
+    <% @users.each do |user| %>
+      <li class='row mb-2 m-0'>
+        <div class='col-md-1'>
+          <img src=" <%= user.photo %>" class="img-thumbnail">
+        </div>
+        <div class='col-md-10 card'>
+          <div class='row justify-content-between'>
+            <h4 class='align-bottom'><%= link_to user.name, user_path(user) %></h4>
+            <label class='align-bottom text-end'>Number of posts: <span><%= user.posts_counter %></span></label>
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>

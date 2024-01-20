@@ -1,15 +1,39 @@
-<h1>
-  <%= @user.name %>
-</h1>
-
-<h2>
-  All Posts by <%= @user.name %>
-</h2>
-
-<ul>
-  <% @posts.each do |post| %>
-    <li>
-      <%= link_to post.title, user_post_path(@user, post) %>
-    </li>
-  <% end %>
-</ul>
+<div class='container'>
+  <div class='row mb-2 m-0 pt-2'>
+    <div class='col-md-1'>
+      <%= image_tag @user.photo, class: 'img-thumbnail' %>
+    </div>
+    <div class='col-md-11 card pt-2'>
+      <div class='row justify-content-between'>
+        <h4 class='align-bottom'><%= @user.name %></h4>
+        <label class='align-bottom text-end'>Number of posts: <span><%= @user.posts_counter %></span></label>
+      </div>
+    </div>
+    <div class='col-md-12 card mt-2'>
+      <p><%= @user.bio %></p>
+    </div>
+    <ul class='table table-responsive table-hover p-0'>
+      <% @user.recent_posts.each do |post| %>
+        <li class='card mt-2 p-2'>
+          <h5 class='col-md-12'>
+            <%= link_to post.title, user_post_path(@user, post) %>
+          </h5>
+          <p class='col-md-12 pt-2'>
+            <%= post.text %>
+          </p>
+          <div class='col-md-12 pt-2 text-end'>
+            <label class='me-2'>
+              Comments: <span><%= post.comments_counter %></span>
+            </label>
+            <label>
+              Likes: <span><%= post.likes_counter %></span>
+            </label>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+    <div class='col-md-12 mt-2 text-center'>
+      <a href=<%= user_posts_path(@user) %> class='btn btn-primary col-md-3'>See all Posts</a>
+    </div>
+  </div>
+</div>

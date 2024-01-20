@@ -12,7 +12,7 @@ RSpec.describe 'Users', type: :request do
     end
 
     it 'assigns all posts to @posts' do
-      user = create(:user)
+      user = create(:user, photo: 'https://example.com/sample_photo.jpg')
       post = create(:post, author: user)
 
       get user_posts_path(user)
@@ -23,7 +23,7 @@ RSpec.describe 'Users', type: :request do
 
   describe 'GET /show' do
     it 'renders the show template' do
-      user = create(:user)
+      user = create(:user, photo: 'https://example.com/sample_photo.jpg')
 
       get user_path(user)
 
@@ -32,7 +32,7 @@ RSpec.describe 'Users', type: :request do
     end
 
     it 'assigns the requested user to @user' do
-      user = create(:user)
+      user = create(:user, photo: 'https://example.com/sample_photo.jpg')
 
       get user_path(user)
 
