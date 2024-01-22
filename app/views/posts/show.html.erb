@@ -1,25 +1,74 @@
-<div class='container'>
-  <div class='row card mt-2 mb-2 m-0 pt-2'>
-    <h5 class='col-md-12'>
+<div class="container">
+  <div class="post-details card mt-2 mb-2 pt-2">
+    <h5 class="post-title">
       <%= link_to "#{@post.title} by #{@post.author.name}", user_post_path(@user, @post) %>
     </h5>
-    <div class='col-md-12 pt-2 text-end'>
-      <label class='me-2'>
-        Comments: <span><%= @post.comments_counter %></span>
-      </label>
-      <label>
-        Likes: <span><%= @post.likes_counter %></span>
-      </label>
+    <div class="post-metadata row text-end">
+      <div class="col-md-6">
+        <label class="me-2">Comments: <span id="comments_counter"><%= @post.comments_counter %></span></label>
+      </div>
+      <div class="col-md-6">
+        <label>Likes: <span id="likes_counter"><%= @post.likes_counter %></span></label>
+        
+      </div>
     </div>
-    <p class='col-md-12 pt-2'>
+    <p class="post-text pt-2">
       <%= @post.text %>
     </p>
   </div>
-  <div class='col-md-12 card mt-2 p-2'>
-    <% @post.comments.each do |comment| %>
-      <div>
-        <%= comment.user.name %>:</span> <span><%= comment.text %></span>
-      </div>
+
+  <div class="comments-section col-md-12 card mt-2 p-2">
+    <% if @post.comments.present? %>
+      <h5>Comments:</h5>
+      <% @post.comments.each do |comment| %>
+        <div class="comment">
+          <strong><%= comment.user.name %>:</strong> <%= comment.text %>
+        </div>
+      <% end %>
+    <% else %>
+      <p>No comments for this post</p>
     <% end %>
   </div>
+
+  <div class="comment-form col-md-12 card mt-2 p-2">
+    <h5>Add a Comment:</h5>
+    <%= render 'comments/form', post: @post %>
+    <%= button_to 'Like', like_post_user_post_path(@user, @post), method: :post, remote: true, class: 'btn btn-primary col-me-6', id: 'like_button' %>
+  </div>
+  
 </div>
+
+<script>
+  // JavaScript to handle comment submission and update comments_counter
+  document.addEventListener('DOMContentLoaded', function () {
+    const commentForm = document.getElementById('new_comment');
+
+    if (commentForm) {
+      commentForm.addEventListener('ajax:success', function (event) {
+        const response = event.detail[0];
+        const commentsCounter = document.getElementById('comments_counter');
+
+        // Update comments_counter on successful comment submission
+        if (response.success) {
+          commentsCounter.innerText = response.comments_counter;
+        }
+      });
+    }
+  });
+
+  // JavaScript to handle like submission and update likes_counter
+  document.addEventListener('DOMContentLoaded', function () {
+    const likeButton = document.getElementById('like_button');
+
+    if (likeButton) {
+      likeButton.addEventListener('ajax:success', function (event) {
+        const response = event.detail[0];
+        const likesCounter = document.getElementById('likes_counter');
+
+        if (response.success) {
+          likesCounter.innerText = response.likes_counter;
+        }
+      });
+    }
+  });
+</script>
