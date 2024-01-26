@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_user
+  before_action :set_user, only: [:index, :show, :new, :create, :like]
 
   def index
     @posts = @user.posts
@@ -19,7 +19,9 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to user_post_path(@user, @post), notice: 'Post created successfully.'
     else
-      render json: { success: false, errors: @post.errors.full_messages }
+      # Log validation errors to help diagnose the issue
+      Rails.logger.error(@post.errors.full_messages.to_sentence)
+      render :new
     end
   end
 
@@ -29,6 +31,7 @@ class PostsController < ApplicationController
       redirect_to user_post_path(@user, @post), alert: 'You have already liked this post.'
     else
       @post.likes.create(user: current_user)
+      @post.increment!(:likes_counter)
       redirect_to user_post_path(@user, @post), notice: 'Liked successfully.'
     end
   end
