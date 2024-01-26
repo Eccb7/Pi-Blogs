@@ -34,7 +34,6 @@
   <div class="comment-form col-md-12 card mt-2 p-2">
     <h5>Add a Comment:</h5>
     <%= render 'comments/form', post: @post %>
-    <%= button_to 'Like', like_post_user_post_path(@user, @post), method: :post, remote: true, class: 'btn btn-primary col-me-6', id: 'like_button' %>
   </div>
   
 </div>
