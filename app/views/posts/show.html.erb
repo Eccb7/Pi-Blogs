@@ -15,7 +15,7 @@
     <p class="post-text pt-2">
       <%= @post.text %>
     </p>
-    <%= button_to 'Like', like_user_post_path(@user, @post), method: :post, remote: true, class: 'btn btn-primary', id: 'like_button' %>
+    <%= button_to 'Like', like_post_user_post_path(@user, @post), method: :post, remote: true, class: 'btn btn-primary', id: 'like_button' %>
   </div>
 
   <div class="comments-section col-md-12 card mt-2 p-2">
