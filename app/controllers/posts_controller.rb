@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_user
+  before_action :set_user, only: %i[index show new create like]
 
   def index
     @posts = @user.posts
@@ -20,6 +20,7 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to user_post_path(@user, @post), notice: 'Post created successfully.'
     else
+      Rails.logger.error(@post.errors.full_messages.to_sentence)
       render :new
     end
   end
@@ -34,10 +35,9 @@ class PostsController < ApplicationController
         format.js { render :update_likes }
       end
     else
-      respond_to do |format|
-        format.html { redirect_to user_post_path(@user, @post), alert: 'Unable to like the post.' }
-        format.js { render js: 'alert("Unable to like the post.");' }
-      end
+      @post.likes.create(user: current_user)
+      @post.increment!(:likes_counter)
+      redirect_to user_post_path(@user, @post), notice: 'Liked successfully.'
     end
   end
 
