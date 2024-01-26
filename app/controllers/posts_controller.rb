@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_user, only: [:index, :show, :new, :create, :like]
+  before_action :set_user, only: %i[index show new create like]
 
   def index
     @posts = @user.posts
