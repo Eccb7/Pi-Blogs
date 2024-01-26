@@ -8,7 +8,8 @@
         <label class="me-2">Comments: <span id="comments_counter"><%= @post.comments_counter %></span></label>
       </div>
       <div class="col-md-6">
-        <label>Likes: <span><%= @post.likes_counter %></span></label>
+        <label>Likes: <span id="likes_counter"><%= @post.likes_counter %></span></label>
+        
       </div>
     </div>
     <p class="post-text pt-2">
@@ -33,7 +34,9 @@
   <div class="comment-form col-md-12 card mt-2 p-2">
     <h5>Add a Comment:</h5>
     <%= render 'comments/form', post: @post %>
+    <%= button_to 'Like', like_post_user_post_path(@user, @post), method: :post, remote: true, class: 'btn btn-primary col-me-6', id: 'like_button' %>
   </div>
+  
 </div>
 
 <script>
@@ -67,4 +70,19 @@
     });
   }
 });
+  
+  document.addEventListener('DOMContentLoaded', function () {
+    const likeButton = document.getElementById('like_button');
+
+    if (likeButton) {
+      likeButton.addEventListener('ajax:success', function (event) {
+        const response = event.detail[0];
+        const likesCounter = document.getElementById('likes_counter');
+
+        if (response.success) {
+          likesCounter.innerText = response.likes_counter;
+        }
+      });
+    }
+  });
 </script>
