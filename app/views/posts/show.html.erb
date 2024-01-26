@@ -14,6 +14,7 @@
     <p class="post-text pt-2">
       <%= @post.text %>
     </p>
+    <%= button_to 'Like', like_user_post_path(@user, @post), method: :post, remote: true, class: 'btn btn-primary', id: 'like_button' %>
   </div>
 
   <div class="comments-section col-md-12 card mt-2 p-2">
@@ -36,7 +37,6 @@
 </div>
 
 <script>
-  // JavaScript to handle comment submission and update comments_counter
   document.addEventListener('DOMContentLoaded', function () {
     const commentForm = document.getElementById('new_comment');
 
@@ -52,4 +52,19 @@
       });
     }
   });
+
+  document.addEventListener('DOMContentLoaded', function () {
+  const likeButton = document.getElementById('like_button');
+
+  if (likeButton) {
+    likeButton.addEventListener('ajax:success', function (event) {
+      const response = event.detail[0];
+      const likesCounter = document.getElementById('likes_counter');
+
+      if (response.success) {
+        likesCounter.innerText = response.likes_counter;
+      }
+    });
+  }
+});
 </script>
