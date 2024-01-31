@@ -2,7 +2,7 @@ class PostsController < ApplicationController
   before_action :set_user, only: %i[index show new create like]
 
   def index
-    @posts = @user.posts
+    @posts = @user.posts.includes(:comments)
   end
 
   def show
