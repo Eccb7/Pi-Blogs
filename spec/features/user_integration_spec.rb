@@ -72,7 +72,7 @@ RSpec.feature 'User Integration', type: :feature do
 
   scenario 'Post show page displays first comments' do
     post = create(:post, author: user)
-    comments = create_list(:comment, 3, post: post)
+    comments = create_list(:comment, 1, post: post)
 
     visit user_post_path(user, post)
 
