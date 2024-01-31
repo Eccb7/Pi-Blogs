@@ -7,7 +7,6 @@ RSpec.describe Post, type: :model do
     user = create(:user, name: 'Solo Artist', posts_counter: 5)
     post = user.posts.create(title: 'Sample Post', text: 'Some text here', comments_counter: 3, likes_counter: 0)
 
-
     expect(post).to be_valid
   end
 

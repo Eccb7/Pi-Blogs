@@ -7,7 +7,7 @@ RSpec.feature 'User Integration', type: :feature do
     visit users_path
 
     expect(page).to have_content(user.name)
-    expect(page).to have_selector("img.img-thumbnail")
+    expect(page).to have_selector('img.img-thumbnail')
     expect(page).to have_content("Number of posts: #{user.posts_counter}")
 
     click_link user.name
@@ -17,7 +17,7 @@ RSpec.feature 'User Integration', type: :feature do
   scenario 'User show page' do
     visit user_path(user)
 
-    expect(page).to have_selector("img.img-thumbnail")
+    expect(page).to have_selector('img.img-thumbnail')
     expect(page).to have_content(user.name)
     expect(page).to have_content("Number of posts: #{user.posts_counter}")
     expect(page).to have_content(user.bio)
@@ -30,17 +30,13 @@ RSpec.feature 'User Integration', type: :feature do
       expect(page).to have_link('See all Posts', href: user_posts_path(user))
       click_link user.posts.first.title
       expect(current_path).to eq(user_post_path(user, user.posts.first))
-    else
-      # Handle the case when the user has no posts
-      # For example, you can add an expectation or a message indicating that there are no posts.
-      # expect(page).to have_content("This user has no posts.")
     end
   end
 
   scenario 'User post index page' do
     visit user_posts_path(user)
 
-    expect(page).to have_selector("img.img-thumbnail")
+    expect(page).to have_selector('img.img-thumbnail')
     expect(page).to have_content(user.name)
     expect(page).to have_content("Number of posts: #{user.posts_counter}")
 
@@ -75,7 +71,6 @@ RSpec.feature 'User Integration', type: :feature do
   end
 
   scenario 'Post show page displays first comments' do
-    # Create a post with more than one comment
     post = create(:post, author: user)
     comments = create_list(:comment, 3, post: post)
 
@@ -97,7 +92,6 @@ RSpec.feature 'User Integration', type: :feature do
 
     visit user_path(user)
 
-    # Assuming you display 3 posts per page
     expect(page).to have_selector('.post', count: 0)
     expect(page).not_to have_selector('.pagination')
   end
