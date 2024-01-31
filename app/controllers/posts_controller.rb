@@ -6,7 +6,8 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = @user.posts.includes(:comments).find(params[:id])
+    @post = @user.posts.find(params[:id])
+    @comment = Comment.new # Add this line to initialize a new comment for the form
   end
 
   def new
@@ -19,7 +20,6 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to user_post_path(@user, @post), notice: 'Post created successfully.'
     else
-      # Log validation errors to help diagnose the issue
       Rails.logger.error(@post.errors.full_messages.to_sentence)
       render :new
     end
@@ -27,8 +27,13 @@ class PostsController < ApplicationController
 
   def like
     @post = @user.posts.find(params[:id])
-    if @post.likes.where(user: current_user).exists?
-      redirect_to user_post_path(@user, @post), alert: 'You have already liked this post.'
+    like = @post.likes.new(user: current_user)
+
+    if like.save
+      respond_to do |format|
+        format.html { redirect_to user_post_path(@user, @post), notice: 'Liked successfully.' }
+        format.js { render :update_likes }
+      end
     else
       @post.likes.create(user: current_user)
       @post.increment!(:likes_counter)
