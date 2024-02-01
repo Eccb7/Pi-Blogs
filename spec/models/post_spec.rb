@@ -4,9 +4,9 @@ RSpec.describe Post, type: :model do
   self.use_transactional_tests = true
 
   it 'is valid with valid attributes' do
-    user = User.create(name: 'Solo Artist', posts_counter: 5)
-    user.save
-    post = user.posts.create(title: 'Sample Post', comments_counter: 2, likes_counter: 3)
+    user = create(:user, name: 'Solo Artist', posts_counter: 5)
+    post = user.posts.create(title: 'Sample Post', text: 'Some text here', comments_counter: 3, likes_counter: 0)
+
     expect(post).to be_valid
   end
 

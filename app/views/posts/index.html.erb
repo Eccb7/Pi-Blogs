@@ -17,7 +17,7 @@
       <%= link_to 'Create New Post', new_user_post_path(@user), class: 'btn btn-primary col-md-2' %>
     </div>
     <ul class='table table-responsive table-hover p-0'>
-      <% @user.recent_posts.each do |post| %>
+      <% @user.recent_posts.includes(:comments, :likes).each do |post| %>
         <li class='card mt-2 p-2'>
           <h5 class='col-md-12'>
             <%= link_to post.title, user_post_path(@user, post) %>

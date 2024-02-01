@@ -1,6 +1,6 @@
 <div class='container'>
   <ul class='table table-responsive table-hover p-0'>
-    <% @users.each do |user| %>
+    <% @users.includes(:posts).each do |user| %>
       <li class='row mb-2 m-0'>
         <div class='col-md-1'>
           <img src=" <%= user.photo %>" class="img-thumbnail">

@@ -11,7 +11,7 @@ class CommentsController < ApplicationController
 
     if @comment.save
       # Update the comments list and comments_counter
-      @comments = @post.comments.order(created_at: :desc)
+      @comments = @post.comments.includes(:user).order(created_at: :desc)
       @post.update(comments_counter: @comments.count)
 
       # Redirect or render as needed
