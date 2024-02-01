@@ -113,6 +113,12 @@ To run tests, run the following command:
 - Twitter: [@briton_otieno4](https://twitter.com/briton_otieno4)
 - LinkedIn: [briton-otieno](https://linkedin.com/in/briton-otieno)
 
+
+👤 **Alier Philip Maguet**
+
+- GitHub: [@AlierPM](https://github.com/AlierPM)
+- Twitter: [@AlierPM](https://twitter.com/AlierPM)
+- LinkedIn: [alierphilipmaguet](https://linkedin.com/in/alierphilipmaguet)
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 🔭 Future Features <a name="future-features"></a>
