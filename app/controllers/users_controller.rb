@@ -10,6 +10,7 @@ class UsersController < ApplicationController
       redirect_to root_path, alert: 'User not found'
     else
       @posts = @user.posts.any? ? @user.posts.page(params[:page]) : []
+      @user_photo = @user.photo || view_context.asset_path('default_photo.jpg')
     end
   end
 
