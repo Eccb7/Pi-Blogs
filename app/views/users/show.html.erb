@@ -1,7 +1,7 @@
 <div class='container'>
   <div class='row mb-2 m-0 pt-2'>
     <div class='col-md-1'>
-      <%= image_tag @user.photo, class: 'img-thumbnail' %>
+      <img src=<%= @user.photo %> class='img-thumbnail' />
     </div>
     <div class='col-md-11 card pt-2'>
       <div class='row justify-content-between'>
@@ -12,31 +12,29 @@
     <div class='col-md-12 card mt-2'>
       <p><%= @user.bio %></p>
     </div>
-    <% if @user.recent_posts.any? %>
-      <ul class='table table-responsive table-hover p-0'>
-        <% @user.recent_posts.includes(:comments, :likes).page(params[:page]).each do |post| %>
-          <li class='card mt-2 p-2'>
-            <h5 class='col-md-12'>
-              <%= link_to post.title, user_post_path(@user, post) %>
-            </h5>
-            <p class='col-md-12 pt-2'>
-              <%= post.text %>
-            </p>
-            <div class='col-md-12 pt-2 text-end'>
-              <label class='me-2'>
-                Comments: <span><%= post.comments_counter %></span>
-              </label>
-              <label>
-                Likes: <span><%= post.likes_counter %></span>
-              </label>
-            </div>
-          </li>
-        <% end %>
-      </ul>
-      <div class='col-md-12 mt-2 text-center'>
-      </div>
-    <% else %>
-      <p class='col-md-12 mt-2 text-center'>No recent posts available.</p>
-    <% end %>
+
+    <div class='col-md-12 mt-2 text-center'>
+      <%= link_to 'Create New Post', new_user_post_path(@user), class: 'btn btn-primary col-md-2' %>
+    </div>
+    <ul class='table table-responsive table-hover p-0'>
+      <% @user.recent_posts.includes(:comments, :likes).each do |post| %>
+        <li class='card mt-2 p-2'>
+          <h5 class='col-md-12'>
+            <%= link_to post.title, user_post_path(@user, post) %>
+          </h5>
+          <p class='col-md-12 pt-2'>
+            <%= post.text %>
+          </p>
+          <div class='col-md-12 pt-2 text-end'>
+            <label class='me-2'>
+              Comments: <span><%= post.comments_counter %></span>
+            </label>
+            <label>
+              Likes: <span><%= post.likes_counter %></span>
+            </label>
+          </div>
+        </li>
+      <% end %>
+    </ul>
   </div>
 </div>
