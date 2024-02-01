@@ -3,7 +3,11 @@
     <% @users.includes(:posts).each do |user| %>
       <li class='row mb-2 m-0'>
         <div class='col-md-1'>
-          <img src=" <%= user.photo %>" class="img-thumbnail">
+          <% if user.photo.present? && user.photo.start_with?('http') %>
+            <img src="<%= user.photo %>" class="img-thumbnail">
+          <% else %>
+            <img src="<%= user.photo.present? ? user.photo.url : asset_path('default_photo.jpg') %>" class="img-thumbnail">
+          <% end %>
         </div>
         <div class='col-md-10 card'>
           <div class='row justify-content-between'>
