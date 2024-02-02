@@ -18,7 +18,16 @@ class CommentsController < ApplicationController
     end
   end
 
-  
+  def destroy
+    authorize! :destroy, @comment
+
+    if @comment.destroy
+      update_comments_list_and_counter
+      redirect_to user_post_path(@user, @post), notice: 'Comment was successfully destroyed.'
+    else
+      redirect_to user_post_path(@user, @post), alert: 'Error destroying comment.'
+    end
+  end
 
   private
 
