@@ -49,7 +49,17 @@ class PostsController < ApplicationController
     @post.update(post_params)
   end
 
-  
+  def destroy
+    authorize! :destroy, @post
+    @post.comments.destroy_all
+
+    user = @post.author # Use @post.author instead of @user
+    if @post.destroy
+      redirect_to user_posts_path(user), notice: 'Post was successfully destroyed.'
+    else
+      redirect_to user_posts_path(user), alert: 'Error destroying post.'
+    end
+  end
 
   private
 
