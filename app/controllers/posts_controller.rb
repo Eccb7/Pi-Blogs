@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
+  before_action :authenticate_user!, except: %i[index show]
   load_and_authorize_resource
   before_action :set_user, only: %i[index show new create like]
 
