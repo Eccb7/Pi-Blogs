@@ -4,7 +4,7 @@ module Api
 
     def index
       @comments = @post.comments
-      
+      render json: @comments
     end
 
     def create
