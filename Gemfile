@@ -28,6 +28,8 @@ gem 'jbuilder'
 
 gem 'will_paginate'
 
+gem 'cancancan'
+
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
 
