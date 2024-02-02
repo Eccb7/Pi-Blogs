@@ -3,15 +3,21 @@
     <h5 class="post-title">
       <%= link_to "#{@post.title} by #{@post.author.name}", user_post_path(@user, @post) %>
     </h5>
+
+    <% if current_user == @post.author || current_user.admin? %>
+      <!-- Add Delete button for the post -->
+      <%= button_to 'Delete', user_post_path(@user, @post), method: :delete, class: 'btn btn-danger', data: { confirm: 'Are you sure?' } %>
+    <% end %>
+
     <div class="post-metadata row text-end">
       <div class="col-md-6">
         <label class="me-2">Comments: <span id="comments_counter"><%= @post.comments_counter %></span></label>
       </div>
       <div class="col-md-6">
         <label>Likes: <span id="likes_counter"><%= @post.likes_counter %></span></label>
-        
       </div>
     </div>
+
     <p class="post-text pt-2">
       <%= @post.text %>
     </p>
@@ -24,6 +30,12 @@
       <% @post.comments.each do |comment| %>
         <div class="comment">
           <strong><%= comment.user.name %>:</strong> <%= comment.text %>
+          
+          <!-- Add Delete button for comments -->
+          <% if can? :destroy, comment %>
+            <%= button_to 'Delete', user_post_comment_path(@user, @post, comment), method: :delete, remote: true, data: { confirm: 'Are you sure?' }, class: 'delete-comment-btn' %>
+          <% end %>
+
         </div>
       <% end %>
     <% else %>
@@ -35,7 +47,6 @@
     <h5>Add a Comment:</h5>
     <%= render 'comments/form', post: @post %>
   </div>
-  
 </div>
 
 <script>
@@ -53,23 +64,21 @@
         }
       });
     }
-  });
 
-  document.addEventListener('DOMContentLoaded', function () {
-  const likeButton = document.getElementById('like_button');
+    // Add event listener for delete-comment-btn clicks
+    document.addEventListener('ajax:success', function (event) {
+      const element = event.target;
+      if (element.classList.contains('delete-comment-btn')) {
+        const response = event.detail[0];
 
-  if (likeButton) {
-    likeButton.addEventListener('ajax:success', function (event) {
-      const response = event.detail[0];
-      const likesCounter = document.getElementById('likes_counter');
-
-      if (response.success) {
-        likesCounter.innerText = response.likes_counter;
+        // Remove the deleted comment element
+        if (response.success) {
+          element.closest('.comment').remove();
+        }
       }
     });
-  }
-});
-  
+  });
+
   document.addEventListener('DOMContentLoaded', function () {
     const likeButton = document.getElementById('like_button');
 
@@ -85,3 +94,4 @@
     }
   });
 </script>
+
