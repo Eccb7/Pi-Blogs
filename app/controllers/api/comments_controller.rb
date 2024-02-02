@@ -1,5 +1,6 @@
 module Api
   class CommentsController < ApplicationController
+    before_action :authenticate_user!, only: [:create, :destroy]
     before_action :set_user_and_post
 
     def index
@@ -9,7 +10,7 @@ module Api
 
     def create
       @comment = @post.comments.new(comment_params)
-      @comment.user = @user
+      @comment.user = current_user
 
       if @comment.save
         render json: @comment, status: :created
