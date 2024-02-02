@@ -1,6 +1,6 @@
 module Api
   class CommentsController < ApplicationController
-    before_action :authenticate_user!, only: %i[create destroy]
+    before_action :authenticate_user!, only: [:create]
     before_action :set_user_and_post
 
     def index
