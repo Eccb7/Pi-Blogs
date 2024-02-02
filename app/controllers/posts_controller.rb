@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  before_action :authenticate_user!, except: [:index, :show]
+  load_and_authorize_resource
   before_action :set_user, only: %i[index show new create like]
 
   def index
@@ -6,6 +8,7 @@ class PostsController < ApplicationController
   end
 
   def show
+    authorize! :read, @post
     @post = @user.posts.find(params[:id])
     @comment = Comment.new # Add this line to initialize a new comment for the form
   end
@@ -26,6 +29,7 @@ class PostsController < ApplicationController
   end
 
   def like
+    authorize! :like, @post
     @post = @user.posts.find(params[:id])
     like = @post.likes.new(user: current_user)
 
@@ -38,6 +42,22 @@ class PostsController < ApplicationController
       @post.likes.create(user: current_user)
       @post.increment!(:likes_counter)
       redirect_to user_post_path(@user, @post), notice: 'Liked successfully.'
+    end
+  end
+
+  def update
+    @post.update(post_params)
+  end
+
+  def destroy
+    authorize! :destroy, @post
+    @post.comments.destroy_all
+
+    user = @post.author # Use @post.author instead of @user
+    if @post.destroy
+      redirect_to user_posts_path(user), notice: 'Post was successfully destroyed.'
+    else
+      redirect_to user_posts_path(user), alert: 'Error destroying post.'
     end
   end
 
